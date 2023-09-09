@@ -54,7 +54,7 @@ class Fighter():
         self.speed += 2
     
     def death(self):
-        if self.health <= 0:
+        while self.health <= 0:
             print(f"{self.name} is dead.")    
 
 class GameManager:
@@ -78,30 +78,30 @@ class GameManager:
 
             elif action == "attack":
                 if self.active_fighter == self.fighter_1:
+                    self.fighter_1.attack(self.fighter_2)
                     damage = self.fighter_1.strength - self.fighter_2.defense
                     if damage <= 0:
                         damage = 0
-                    self.fighter_1.attack(self.fighter_2)
                     self.fighter_2.take_damage(damage)
                 else:
+                    self.fighter_2.attack(self.fighter_1)
                     damage = self.fighter_2.strength - self.fighter_1.defense
                     if damage <= 0:
                         damage = 0
-                    self.fighter_2.attack(self.fighter_1)
                     self.fighter_1.take_damage(damage)
             
             elif action == "rage":
                 if self.active_fighter == self.fighter_1:
+                    self.fighter_1.rage(self.fighter_2)
                     damage = self.fighter_1.strength - self.fighter_2.defense
                     if damage <= 0:
-                        damage = 0
-                    self.fighter_1.rage(self.fighter_2)
+                        damage = 0                    
                     self.fighter_2.take_damage(damage)
                 else:
+                    self.fighter_2.rage(self.fighter_1)
                     damage = self.fighter_2.strength - self.fighter_1.defense
                     if damage <= 0:
-                        damage = 0
-                    self.fighter_2.rage(self.fighter_1)
+                        damage = 0                    
                     self.fighter_1.take_damage(damage)
 
             elif action == "defend":
