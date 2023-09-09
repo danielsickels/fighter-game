@@ -3,7 +3,7 @@ import random
 class Fighter():
     def __init__(self, name, health = 20, defense = 5, strength = 5, speed = 5):
         self.name = name
-        self.health = (health)
+        self.health = health
         self.defense = defense
         self.strength = strength
         self.speed = speed
@@ -20,8 +20,10 @@ class Fighter():
         print(f"Strength: {self.strength}")
         print(f"Speed: {self.speed}")
         #print(f"Intellect: {self.intellect}")
+        print("")
     
     def attack(self, other_player):
+        self.strength += 1
         damage = self.strength - other_player.defense
         if damage <= 0:
             damage = 0
@@ -46,7 +48,7 @@ class Fighter():
 
 class GameManager:
     def __init__(self):
-        self.fighter_1 = Fighter("Danny", strength=18)
+        self.fighter_1 = Fighter("Danny")
         self.fighter_2 = Fighter("Mike")
         self.active_fighter = self.fighter_1
 
@@ -61,17 +63,26 @@ class GameManager:
                 if self.active_fighter == self.fighter_1:
                     self.active_fighter = self.fighter_2
                 else:
-                    self.active_fighter = self.fighter_2
+                    self.active_fighter = self.fighter_1
             elif action == "attack":
                 if self.active_fighter == self.fighter_1:
+                    damage = self.fighter_1.strength - self.fighter_2.defense
+                    if damage <= 0:
+                        damage = 0
                     self.fighter_1.attack(self.fighter_2)
-                    self.fighter_2.take_damage(damage = self.fighter_1.strength - self.fighter_2.defense)
+                    self.fighter_2.take_damage(damage)
                 else:
+                    damage = self.fighter_2.strength - self.fighter_1.defense
+                    if damage <= 0:
+                        damage = 0
                     self.fighter_2.attack(self.fighter_1)
-                    self.fighter_1.take_damage(damage = self.fighter_2.strength - self.fighter_1.defense)
+                    self.fighter_1.take_damage(damage)
             elif action == "defend":
                 self.active_fighter.defend()
                 print(f"{self.active_fighter} is prepared for an attack! {self.active_fighter} is at {self.active_fighter.defense} defense.")
+            elif action == "boost speed":
+                self.active_fighter.boost_speed()
+                print(f"{self.active_fighter} is feeling energetic! Their speed is {self.active_fighter.speed}")
             elif action == "run away":
                 if self.active_fighter == self.fighter_1:
                     inactive_fighter = self.fighter_2
@@ -86,9 +97,6 @@ class GameManager:
                 self.active_fighter = self.fighter_2
             else:
                 self.active_fighter = self.fighter_1
-
-
-
 
 gametime = GameManager()
 gametime.start_turn()
