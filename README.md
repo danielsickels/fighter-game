@@ -1,5 +1,6 @@
 # fighter-game
 First Portfolio Project
+- Terminal Game
 
 This is a simple text-based fighter game.
 Two players required.
