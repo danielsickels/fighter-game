@@ -47,7 +47,7 @@ class Fighter():
 
     
 
-class Fightin_time:
+class GameManager:
     def __init__(self):
         self.fighter_1 = Fighter("Danny")
         self.fighter_2 = Fighter("Mike")
