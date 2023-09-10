@@ -8,7 +8,7 @@ class Fighter():
         self.strength = strength
         self.speed = speed
         #self.intellect = intellect
-        self.valid_actions = ["Stats", "Attack", "rage", "Defend", "Boost Speed", "Run Away"]
+        self.valid_actions = ["Stats", "Attack", "Rage", "Defend", "Boost Speed", "Run Away"]
         self.action = ""
 
     def __repr__(self):
@@ -52,21 +52,23 @@ class Fighter():
 
     def boost_speed(self):
         self.speed += 2
-    
-    def death(self):
-        while self.health <= 0:
-            print(f"{self.name} is dead.")    
 
 class GameManager:
     def __init__(self):
         self.fighter_1 = Fighter("Danny")
         self.fighter_2 = Fighter("Mike")
         self.active_fighter = self.fighter_1
+        self.is_dead = False
+    
+    def check_for_death(self, active_fighter):
+        if active_fighter.health <= 0:
+            return True
+        return False
 
     def start_turn(self):
-        while True:
+        while not self.is_dead:
             print(f"The active fighter is {self.active_fighter}, please choose an action:")
-            print(f"{self.fighter_1.valid_actions}")
+            print(*self.fighter_1.valid_actions, sep = ", ")
             action = input().lower()
 
             if action == "stats":
@@ -134,11 +136,15 @@ class GameManager:
                 self.active_fighter = self.fighter_2
             else:
                 self.active_fighter = self.fighter_1
+            
+            if self.check_for_death(self.fighter_1):
+                print(f"{self.fighter_1.name} has died. {self.fighter_2.name} wins!")
+                self.is_dead = True
+            elif self.check_for_death(self.fighter_2):
+                print(f"{self.fighter_2.name} has died. {self.fighter_1.name} wins!")
+                self.is_dead = True
+
+
 
 gametime = GameManager()
 gametime.start_turn()
-
-
-# print(self.fighter_1.attack(self.fighter_2))
-# print(self.fighter_1.attack(self.fighter_2))
-# print(f"{self.fighter_2.name} has {self.fighter_2.health} health.")
