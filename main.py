@@ -38,7 +38,7 @@ class Fighter:
             print(f"{self.name} is dead.")
 
     def defend(self):
-        self.defense += 2
+        self.defense += 1
         print(f"{self.name}'s defense increased to {self.defense}.")
 
     def boost_speed(self):
@@ -94,7 +94,7 @@ class FightinTime:
         while all(fighter.health > 0 for fighter in self.fighters):
             actions = self.get_actions()
             if self.resolve_actions(actions):
-                break  # Game ends if a fighter runs away
+                break  
 
 gametime = FightinTime()
 gametime.start()
